@@ -1,0 +1,60 @@
+<div class="jumbotron">
+    <h1 class="display-4">Olá, Pessoa!</h1>
+    <p class="lead">Este é um gerenciador de tarefas desenvolvido pelos alunos da São Judas.</p>
+    <hr class="my-4">
+    <p>O aplicativo está em sua fase de teste.</p>
+</div>
+
+<mat-accordion>
+    <mat-tab-group mat-align-tabs="end">
+        <mat-tab label="Proximas">
+    <mat-expansion-panel *ngFor="let task of tasks | async">
+    <mat-expansion-panel-header>{{task.name}}</mat-expansion-panel-header>
+    <div class="card-body">
+        <div class="row">
+                <div class="col">
+                    <p>Criada: {{task.dateinicial}}</p>
+                 </div>
+                 <div class="col">
+            <p>Termina: {{task.datefinal}}</p>
+        </div>
+        </div>
+        <div class="container">
+    <p>Descrição:</p>
+    <p>{{task.description}}</p>
+</div>
+    </div>
+
+    <mat-action-row>
+        <button type="button" class="btn btn-default" (click)="updateTask(task, task.key)">Editar</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteTask(task.key)">Excluir</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-tab>
+    <mat-tab label="Concluidas">IMPLEMENTAR CHECKBOX</mat-tab>
+    
+    </mat-tab-group>
+    </mat-accordion>
+    
+
+
+
+
+
+            <div class=" card mt-3" *ngFor="let task of tasks | async">
+    
+                <div class="card-body">
+                    <h5 class="card-title">{{task.name}}</h5>
+                    <p class="card-title">{{task.description}}</p>
+            
+                    <div class="row">
+                        <button type="button" class="btn btn-default" (click)="updateTask(task, task.key)">Editar</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteTask(task.key)">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        
+    
+    
+        
+

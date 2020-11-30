@@ -1,0 +1,71 @@
+
+
+    <div class="gradient" fxLayout fxLayoutAlign="center center">
+        <mat-card class="login-card">
+            <div fxLayout="column">
+                <h2 class="text-center">Bem Vindo(a)!</h2>
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <mat-tab-group>
+                        <mat-tab label="Entrar">
+                            <ng-template matTabContent>
+                                <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
+                                    <div fxLayout="column" class="form-container">
+                                        <mat-form-field>
+                                            <label>Email</label>
+                                            <input matInput formControlName="email" type="email" id="email" />
+
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <label>Senha</label>
+                                            <input matInput formControlName="password" type="password" id="password" />
+                                        </mat-form-field>
+
+
+                                        <div class="container-button">
+                                            <button type="submit" class="btn btn-danger btn-block"
+                                                [disabled]="loginFormGroup.invalid">Entrar</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </ng-template>
+                        </mat-tab>
+
+
+
+                        <mat-tab label="Novo Usuario">
+                            <ng-template matTabContent>
+                                <form [formGroup]="registerFormGroup" (ngSubmit)="register()">
+                                    <div fxLayout="column" class="form-container">
+                                        <mat-form-field>
+                                            <label>Nome</label>
+                                            <input matInput formControlName="first" type="email" id="first" />
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <label>Email</label>
+                                            <input matInput formControlName="email" type="email" id="email" />
+                                            <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar
+                                                seu email, com ninguém.</small>
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <label>Senha</label>
+                                            <input matInput formControlName="password" type="text" id="password"
+                                                required minlength="6" />
+                                            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+                                        </mat-form-field>
+
+                                        <button type="submit" class="btn btn-danger btn-block"
+                                            [disabled]="registerFormGroup.invalid">Cadastar</button>
+                                    </div>
+                                </form>
+                            </ng-template>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+
+        </mat-card>
+    </div>

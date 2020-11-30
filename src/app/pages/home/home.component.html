@@ -1,0 +1,31 @@
+<mat-toolbar>
+    <mat-toolbar-row class="cabecalho">
+        <span>SCHEDULE<mat-icon>date_range</mat-icon></span>
+        <span class="example-spacer"></span>
+        
+        <div class="btn-toolbar-center">
+
+            
+            <button mat-raised-button class="nav-link-home" [routerLink]="['']"><mat-icon  aria-hidden="false" aria-label="menuIcon">menu</mat-icon></button>
+            
+            
+            <button mat-raised-button class="nav-link-edit" [routerLink]="['new']"><mat-icon  aria-hidden="false" aria-label="addLembreteIcon">add </mat-icon> Lembrete</button>
+            
+            <button mat-stroked-button class="logout" (click)="logout()">Sair</button>
+
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+
+                    <!-- ROTA -->
+            <section>
+                <main class="container">
+
+                    <router-outlet></router-outlet>
+        
+                </main>
+            </section>
+
+
+        

@@ -1,0 +1,28 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.cabecalho{
+    font-size: 2rem;
+    height: 50px;
+}
+
+.nav-link-home {
+    border:none;
+   background: #B22222;
+   color:000;
+   margin:0 1em 0 0;
+}
+
+.nav-link-edit {
+    color:000;
+   margin:0 1em 0 0;
+}
+
+.logout {
+    border:none;
+   background: white;
+   flex-wrap: nowrap;
+   color:000;
+   margin:0 1em 0 0;
+}
