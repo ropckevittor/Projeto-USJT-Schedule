@@ -27,7 +27,8 @@
 
     <mat-action-row>
         <button type="button" class="btn btn-default" (click)="updateTask(task, task.key)">Editar</button>
-                        <button type="button" class="btn btn-danger" (click)="deleteTask(task.key)">Excluir</button>
+        
+                        <button type="button" class="btn btn-danger" (click)="openDeleteDialog()">Excluir</button>
         </mat-action-row>
     </mat-expansion-panel>
 </mat-tab>
@@ -41,18 +42,7 @@
 
 
 
-            <div class=" card mt-3" *ngFor="let task of tasks | async">
-    
-                <div class="card-body">
-                    <h5 class="card-title">{{task.name}}</h5>
-                    <p class="card-title">{{task.description}}</p>
-            
-                    <div class="row">
-                        <button type="button" class="btn btn-default" (click)="updateTask(task, task.key)">Editar</button>
-                        <button type="button" class="btn btn-danger" (click)="deleteTask(task.key)">Excluir</button>
-                    </div>
-                </div>
-            </div>
+           
         
     
     

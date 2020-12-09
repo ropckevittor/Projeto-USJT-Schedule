@@ -12,7 +12,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
   styleUrls: ['./edit-task.component.css']
 })
 export class EditTaskComponent implements OnInit {
-  model: BsDatepickerModule;
+
   task: Task  
   key: string = '' ;
 
@@ -52,4 +52,6 @@ export class EditTaskComponent implements OnInit {
       this.key = null;
       
   }
+
+  
 }

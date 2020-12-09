@@ -1,9 +1,11 @@
 export class Task {
-    id: number;
+    id: string;
     name: string;
     dateinicial: Date;
     datefinal: Date;
-    
+    key?: string;
     description: string;
     completed: boolean;
+    selected?: boolean;
+    
 }

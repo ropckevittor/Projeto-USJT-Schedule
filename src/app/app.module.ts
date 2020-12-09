@@ -42,7 +42,9 @@ import { MatListModule } from '@angular/material/list'
 import { AuthGuard } from './pages/shared/auth.guard';
 import { AuthService } from './pages/shared/auth.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { DeleteDialogComponent } from './tasks/delete-dialog/delete-dialog.component';
+import { EditDialogComponent } from './tasks/edit-dialog/edit-dialog.component';
 
 
 
@@ -61,6 +63,11 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     HomeComponent,
     AutenticacaoComponent,
     LoginComponent,
+    DeleteDialogComponent,
+    EditDialogComponent,
+    
+    
+    
     
     
 
@@ -93,6 +100,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     MatInputModule,
     MatGridListModule,
     MatTooltipModule,
+    MatSidenavModule,
 
 
     // (())

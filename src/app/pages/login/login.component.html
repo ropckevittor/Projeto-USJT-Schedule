@@ -8,23 +8,31 @@
                     <mat-tab-group>
                         <mat-tab label="Entrar">
                             <ng-template matTabContent>
-                                <form [formGroup]="loginFormGroup" (ngSubmit)="login()">
+                                <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
                                     <div fxLayout="column" class="form-container">
                                         <mat-form-field>
                                             <label>Email</label>
                                             <input matInput formControlName="email" type="email" id="email" />
-
+                                            <mat-error *ngIf="loginForm.controls['email'].errors?.required">Digite o Email</mat-error>
+                                            <mat-error *ngIf="loginForm.controls['email'].errors?.pattern">Entre com um email valido!</mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field>
                                             <label>Senha</label>
-                                            <input matInput formControlName="password" type="password" id="password" />
+                                            <input [type]="pwdHide ? 'password' : 'text'" matInput formControlName="password" type="password" id="password" />
+                                            <button type="button" mat-icon-button matSuffix (click)="pwdHide = !pwdHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="pwdHide">
+                                                <mat-icon matSuffix>{{pwdHide ? 'visibility_off' : 'visibility'}}</mat-icon> </button>
+                                                <mat-error *ngIf="loginForm.controls['password'].errors?.required">Digite a senha para entrar</mat-error>
+
                                         </mat-form-field>
 
 
                                         <div class="container-button">
                                             <button type="submit" class="btn btn-danger btn-block"
-                                                [disabled]="loginFormGroup.invalid">Entrar</button>
+                                            disabled="{{!loginForm.valid}}"><mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+                    
+                                            <mat-icon *ngIf="!loading" aria-hidden="false" aria-label="Safe icon">login</mat-icon>
+                                            <span *ngIf="!loading">Login</span></button>
                                         </div>
 
                                     </div>
@@ -34,31 +42,63 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <mat-tab label="Novo Usuario">
                             <ng-template matTabContent>
-                                <form [formGroup]="registerFormGroup" (ngSubmit)="register()">
+                                <form [formGroup]="registerForm" (ngSubmit)="registerUser(registerForm.value)">
                                     <div fxLayout="column" class="form-container">
                                         <mat-form-field>
                                             <label>Nome</label>
-                                            <input matInput formControlName="first" type="email" id="first" />
+                                            <input matInput formControlName="first" type="text" id="first" />
                                         </mat-form-field>
 
                                         <mat-form-field>
                                             <label>Email</label>
                                             <input matInput formControlName="email" type="email" id="email" />
+                                            <mat-error *ngIf="registerForm.controls['email'].errors?.required">Insira o email</mat-error>
+                                            <mat-error *ngIf="registerForm.controls['email'].errors?.pattern">Entre com um email valido</mat-error>
                                             <small id="emailHelp" class="form-text text-muted">Nunca vamos compartilhar
                                                 seu email, com ninguém.</small>
                                         </mat-form-field>
 
                                         <mat-form-field>
                                             <label>Senha</label>
-                                            <input matInput formControlName="password" type="text" id="password"
+                                            <input matInput formControlName="password1" type="text" id="password"
                                                 required minlength="6" />
-                                            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+                                                <mat-error *ngIf="registerForm.controls['password1'].errors?.required">Coloque a senha para entrar</mat-error>
+                                                <mat-error *ngIf="registerForm.controls['password1'].errors?.minlength">Entre com uma senha com no minimo 8 caracteres</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field>
+                                            <mat-label>Senha de Novo</mat-label>
+                                            <input
+                                                type="password"
+                                                matInput
+                                                placeholder="Password"
+                                                formControlName="password2"
+                                                [errorStateMatcher]="matcher"
+                                            />
+                                            <mat-error *ngIf="registerForm.controls['password2'].errors?.required">Insira a senha de novo</mat-error>
+                                            <mat-error *ngIf="registerForm.hasError('notSame')">As senhas não são as mesmas</mat-error>
                                         </mat-form-field>
 
                                         <button type="submit" class="btn btn-danger btn-block"
-                                            [disabled]="registerFormGroup.invalid">Cadastar</button>
+                                        [disabled]="!registerForm.valid">Cadastar</button>
                                     </div>
                                 </form>
                             </ng-template>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailValidator, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { EmailValidator, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // ROTAS
@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../shared/auth.service';
 import { ContaService } from '../shared/conta.service';
+import { User } from '../shared/user.model';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +20,112 @@ import { ContaService } from '../shared/conta.service';
 })
 export class LoginComponent implements OnInit {
 
+  pwdHide = true;
+  loading = false;
+
+  constructor(private auth: AuthService, private route: Router) { }
+
+  loginForm = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
+    ]),
+    password: new FormControl('', Validators.required)
+  });
+
+  ngOnInit(): void {
+    const userData = this.auth.userData$;
+
+    userData.subscribe(user => {
+      if(user) {
+        this.route.navigate([''])
+      }
+    });
+    
+  }
+
+  onLogin(form: User) {
+    this.loading = true;
+
+    this.auth.loginByEmail(form)
+      .then(res => {
+        this.loading = false;
+        this.route.navigate([''])
+        
+      })
+      .catch(err => {
+        this.loading = false;
+        console.error(err)
+      });
+  }
+
+
+
+private user$: User;
+  matcher = new MyErrorStateMatcher();
+  loading2 = false;
+
+  
+
+  registerForm = new FormGroup({
+    first: new FormControl('', [
+      Validators.required,
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
+    ]),
+    password1: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6)
+    ]),
+    password2: new FormControl('')
+  }, {validators: this.checkPassword})
+
+  
+  registerUser(form: any) {
+    this.loading = true;
+
+    const userObj = {
+      ...this.user$,
+      first: form.first,
+      email: form.email,
+      password: form.password1,
+      
+    }
+
+    this.auth.registerUser(userObj)
+      .then(() => {
+        this.loading2 = false;
+        this.route.navigate(['']);
+
+      }).catch(err => {
+        this.loading = false;
+        console.error(err);
+        
+      });
+    
+  }
+
+  checkPassword(group: FormGroup) {
+    let pass1 = group.get('password1').value;
+    let pass2 = group.get('password2').value;
+
+    return pass1 === pass2 ? null: {notSame: true}
+  }
+
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+
+    return (invalidCtrl || invalidParent);
+  }
+}
+
+/*
   
   loginFormGroup: FormGroup;
   registerFormGroup: FormGroup;
@@ -36,7 +145,7 @@ export class LoginComponent implements OnInit {
       
      login() {
       if (this.loginFormGroup.valid) {
-        this.authService.login(
+        this.authService.loginUser(
         this.loginFormGroup.get("email").value,
         this.loginFormGroup.get("password").value
       ).then(result =>{
@@ -74,4 +183,4 @@ export class LoginComponent implements OnInit {
       }
    }
    
-    
+    */
